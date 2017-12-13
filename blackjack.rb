@@ -74,7 +74,7 @@ class Blackjack
   end
   
   def to_s
-   puts "Player's Hand: #{player_hand.get_value}"
+    puts "Player's Hand: #{player_hand.get_value}"
     puts "Player has #{player_hand.dealt_cards.count} cards."
     puts "Dealer's Hand: #{dealer_hand.get_value}"
     puts "Dealer has #{dealer_hand.dealt_cards.count} cards."
