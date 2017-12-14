@@ -48,8 +48,8 @@ RSpec.describe Hand do
     end
     
     it "returns the correct value with an Ace and a Jack" do
-      card1 = Card.new("Diamonds", "Jack")
-      card2 = Card.new("Clubs", "Ace")
+      card1 = Card.new("Diamonds", "Jack")# 10
+      card2 = Card.new("Clubs", "Ace")# 11
       
       @hand.add_card card1
       @hand.add_card card2

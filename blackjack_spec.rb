@@ -58,7 +58,7 @@ RSpec.describe Blackjack do
       @player_cards = @blackjack.player_hand.dealt_cards
     end
       
-     it "returns two cards for the dealer and player" do
+    it "returns two cards for the dealer and player" do
       expect(@dealer_cards.count).to eq 2
       expect(@player_cards.count).to eq 2
     end
@@ -67,7 +67,7 @@ RSpec.describe Blackjack do
       expect(@dealer_cards.first.show).to eq false
     end
     
-     it "ends the player's turn if he has a blackjack" do
+    it "ends the player's turn if he has a blackjack" do
       card1 = Card.new("Clubs", "10")
       card2 = Card.new("Hearts", "Ace")
       card3 = Card.new("Clubs", "3")
@@ -86,6 +86,7 @@ RSpec.describe Blackjack do
   end
   
   describe "hitting a hand" do
+    
     before do
       @blackjack.deal
       @dealer_cards = @blackjack.dealer_hand.dealt_cards
@@ -93,36 +94,19 @@ RSpec.describe Blackjack do
     end
     it "can hit if @playing is set to true" do
       expect(@blackjack.playing).to eq true
-  end
+    end
     it "returns 2 cards for dealer, but after a hit, the player will have 3 cards" do
       @blackjack.hit
       
       expect(@dealer_cards.count).to eq 2
       expect(@player_cards.count).to eq 3
     end
-    it "determines if player is bausted" do
+    it "determines if player is busted" do
       #player cards
       card1 = Card.new("Clubs", "10")
       card2 = Card.new("Hearts", "10")
       card3 = Card.new("Diamonds", "2")
-      #dealer cards
-      card4 = Card.new("Spades", "10")
-      card5 = Card.new("Clubs", "10")
-      card6 = Card.new("Hearts", "Queen")
       
-      @blackjack = Blackjack.new(SUITS, RANKS)
-      
-      new_deck = [card6, card3, card2, card5, card1, card4]#This rigged deaing gives the player a 'blackjack' hand, ending his turn.
-      @blackjack.deck.replace_with new_deck
-      @blackjack.deal
-      @blackjack.hit
-      expect(@blackjack.result).to eq("Player Busted!")#After cards are dealt, the dealer starts his turn.
-    end
-    it "determines if dealer is bausted" do
-      #player cards
-      card1 = Card.new("Clubs", "10")
-      card2 = Card.new("Hearts", "10")
-      card3 = Card.new("Diamonds", "Ace")
       #dealer cards
       card4 = Card.new("Spades", "10")
       card5 = Card.new("Clubs", "10")
@@ -135,13 +119,15 @@ RSpec.describe Blackjack do
       @blackjack.deal
       @blackjack.hit#Player stands
       
-      @blackjack.current_gamer = "Dealer"
-      @blackjack.hit#The dealer takes a hit and is then busted (dealer's hand value exceedes 21).
-      expect(@blackjack.result).to eq("Dealer Busted!")#After cards are dealt, the dealer starts his turn.
+      @blackjack.current_gamer = "Dealer"#After cards are dealt, the dealer starts his turn.
+      @blackjack.hit#Dealer hits
+      
+      expect(@blackjack.result).to eq("Player Busted!")
     end
   end
   
   describe "standing" do
+    
     before do
       @blackjack = Blackjack.new(SUITS, RANKS)
     end
@@ -151,6 +137,7 @@ RSpec.describe Blackjack do
       card1 = Card.new("Clubs", "10")
       card2 = Card.new("Hearts", "10")
       card3 = Card.new("Diamonds", "Ace")
+      
       #dealer cards
       card4 = Card.new("Spades", "10")
       card5 = Card.new("Clubs", "3")
@@ -170,6 +157,7 @@ RSpec.describe Blackjack do
       card1 = Card.new("Clubs", "10")
       card2 = Card.new("Hearts", "10")
       card3 = Card.new("Diamonds", "Ace")
+      
       #dealer cards
       card4 = Card.new("Spades", "10")
       card5 = Card.new("Clubs", "3")
@@ -188,7 +176,7 @@ RSpec.describe Blackjack do
     end
   end
   
-   describe "showing hands" do
+  describe "showing hands" do
     before do
       @blackjack = Blackjack.new(SUITS, RANKS)
       @blackjack.deal
@@ -201,6 +189,4 @@ RSpec.describe Blackjack do
       expect(@blackjack.show_hands).to match(/Total value:/)
     end
   end
-
-
 end

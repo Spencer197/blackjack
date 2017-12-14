@@ -16,11 +16,11 @@ RSpec.describe Card do
     expect(@card).to respond_to(:rank)
   end
   
-  it "it responds to show" do
+  it "responds to show" do
     expect(@card).to respond_to(:show)
   end
   
-  it "'show'method returns 'true'" do
+  it "'show' method returns 'true'" do
     expect(@card.show).to eq(true)
   end
   

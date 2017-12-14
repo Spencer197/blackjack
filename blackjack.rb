@@ -3,7 +3,6 @@ require_relative 'hand'
 
 class Blackjack
   
-  
   attr_reader :player_hand, :dealer_hand, :playing, :deck
   attr_accessor :current_gamer, :result
   
@@ -68,10 +67,10 @@ class Blackjack
     "Player's hand: #{player_hand}\nDealer's hand: #{dealer_hand}"
   end
 
-  
+=begin  
   def set_results
     
-  end
+=end
   
   def to_s
     puts "Player's Hand: #{player_hand.get_value}"
@@ -79,6 +78,7 @@ class Blackjack
     puts "Dealer's Hand: #{dealer_hand.get_value}"
     puts "Dealer has #{dealer_hand.dealt_cards.count} cards."
   end
+  
   
   private
   
@@ -90,5 +90,4 @@ class Blackjack
       @playing = false
     end
   end
-
 end

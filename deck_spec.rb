@@ -1,4 +1,3 @@
-=begin
 require_relative 'deck'
 
 RSpec.describe Deck do
@@ -53,8 +52,8 @@ RSpec.describe Deck do
     new_deck.replace_with(deck_of_cards)
     expect(@deck.deck).not_to eq(new_deck.deck)
   end
-=end
-
+end
+=begin
 require_relative 'deck'
 
 RSpec.describe Deck do
@@ -110,4 +109,4 @@ RSpec.describe Deck do
     expect(@deck.deck).not_to eq(new_deck.deck)
   end
   
-end
+=end

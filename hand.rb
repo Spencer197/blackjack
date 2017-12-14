@@ -37,6 +37,7 @@ class Hand
 #      rank = rank.to_sym#Converts each card rank into a symbol.
 #      value = value + VALUES[rank]#Creates a VALUES hash with 'rank' as the key and the value (at VALUES[rank]) as the value.
 #    end
+# reduce, acc - 0, next iteration sets acc to result of first iteration and does the calc
     value = card_ranks.reduce(0) { |acc, rank| acc + VALUES[rank.to_sym] }#This line replaces the above 5 lines.
     #Ace can have a value of 11 if the value of the total hand is less than 21.
     if card_ranks.include?('Ace')
