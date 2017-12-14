@@ -119,10 +119,30 @@ RSpec.describe Blackjack do
       @blackjack.deal
       @blackjack.hit#Player stands
       
-      @blackjack.current_gamer = "Dealer"#After cards are dealt, the dealer starts his turn.
-      @blackjack.hit#Dealer hits
-      
       expect(@blackjack.result).to eq("Player Busted!")
+    end
+    it "correctly determines if dealer is busted" do
+      # player cards
+      card1 = Card.new("Clubs", "10")
+      card2 = Card.new("Hearts", "10")
+      card3 = Card.new("Diamonds", "Ace")
+      
+      # dealer cards
+      card4 = Card.new("Spades", "10")
+      card5 = Card.new("Clubs", "10")
+      card6 = Card.new("Hearts", "Queen")
+      
+      @blackjack = Blackjack.new(SUITS, RANKS)
+      
+      new_deck = [card6, card3, card2, card5, card1, card4]
+      @blackjack.deck.replace_with new_deck
+      @blackjack.deal
+      @blackjack.hit # Player stands
+      
+      @blackjack.current_gamer = "Dealer"
+      @blackjack.hit
+      
+      expect(@blackjack.result).to eq("Dealer Busted!")
     end
   end
   
