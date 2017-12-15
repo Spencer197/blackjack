@@ -44,10 +44,10 @@ RSpec.describe Blackjack do
     it "responds to #show_hands" do
       expect(@blackjack).to respond_to(:show_hands)
     end
-    
+=begin    
     it "responds to #set_results" do
       expect(@blackjack).to respond_to(:set_results)  
-    end
+=end
   end
   
   describe "dealing cards" do
@@ -204,9 +204,9 @@ RSpec.describe Blackjack do
     
     it "displays the gamers hand" do
       expect(@blackjack.show_hands).to match(/Player's hand/)
-      expect(@blackjack.show_hands).to match(/Total value:/)
+      expect(@blackjack.show_hands).to match(/Total Value:/)
       expect(@blackjack.show_hands).to match(/Dealer's hand/)
-      expect(@blackjack.show_hands).to match(/Total value:/)
+      expect(@blackjack.show_hands).to match(/Total Value:/)
     end
   end
 end
