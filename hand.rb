@@ -54,6 +54,7 @@ class Hand
     
     if dealt_cards.first.show == false
       first_value = VALUES[dealt_cards.first.rank.to_sym]#Returns value of first card dealt.
+      first_value += 10 if dealt_cards.first.rank == 'Ace'#Adds 10 to the value of an Ace that is dealt as a first card.
       report + "Total Value: " + (get_value - first_value).to_s#Shows player only the value of the second card dealt, not the first. 
     else
       report + "Total Value: " + get_value.to_s#Adds the total value of a hand to the string.
