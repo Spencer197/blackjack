@@ -78,7 +78,7 @@ RSpec.describe Blackjack do
       
       @blackjack = Blackjack.new(SUITS, RANKS)
       
-      new_deck = [card4, card5, card2, card3, card1, card6]#This rigged deaing gives the player a 'blackjack' hand, ending his turn.
+      new_deck = [card4, card5, card2, card3, card1, card6]#This rigged deck gives the player a 'blackjack' hand, ending his turn.
       @blackjack.deck.replace_with new_deck
       @blackjack.deal
       expect(@blackjack.current_gamer).to eq('Dealer')#After cards are dealt, the dealer starts his turn.
@@ -92,15 +92,18 @@ RSpec.describe Blackjack do
       @dealer_cards = @blackjack.dealer_hand.dealt_cards
       @player_cards = @blackjack.player_hand.dealt_cards
     end
+    
     it "can hit if @playing is set to true" do
       expect(@blackjack.playing).to eq true
     end
+    
     it "returns 2 cards for dealer, but after a hit, the player will have 3 cards" do
       @blackjack.hit
       
       expect(@dealer_cards.count).to eq 2
       expect(@player_cards.count).to eq 3
     end
+    
     it "determines if player is busted" do
       #player cards
       card1 = Card.new("Clubs", "10")
@@ -114,7 +117,7 @@ RSpec.describe Blackjack do
       
       @blackjack = Blackjack.new(SUITS, RANKS)
       
-      new_deck = [card6, card3, card2, card5, card1, card4]#This rigged deaing gives the player a 'blackjack' hand, ending his turn.
+      new_deck = [card6, card3, card2, card5, card1, card4]#This rigged deck gives the player a 'blackjack' hand, ending his turn.
       @blackjack.deck.replace_with new_deck
       @blackjack.deal
       @blackjack.hit#Player stands
@@ -163,7 +166,7 @@ RSpec.describe Blackjack do
       card5 = Card.new("Clubs", "3")
       card6 = Card.new("Hearts", "Queen")
       
-      new_deck = [card6, card3, card2, card5, card1, card4]#This rigged deaing gives the player a 'blackjack' hand, ending his turn.
+      new_deck = [card6, card3, card2, card5, card1, card4]#This rigged deck gives the player a 'blackjack' hand, ending his turn.
       @blackjack.deck.replace_with new_deck
       @blackjack.deal
       @blackjack.hit#The player hits
@@ -207,6 +210,116 @@ RSpec.describe Blackjack do
       expect(@blackjack.show_hands).to match(/Total Value:/)
       expect(@blackjack.show_hands).to match(/Dealer's hand/)
       expect(@blackjack.show_hands).to match(/Total Value:/)
+    end
+  end
+  
+  describe "settings results" do
+    it "sets the correct result when player busts" do
+      #player cards
+      card1 = Card.new("Clubs", "10")
+      card2 = Card.new("Hearts", "10")
+      card3 = Card.new("Diamonds", "2")#player hits this card & busts.
+      
+      # dealer cards
+      card4 = Card.new("Spades", "10")
+      card5 = Card.new("Clubs", "3")
+      card6 = Card.new("Hearts", "Queen")
+      
+      @blackjack = Blackjack.new(SUITS, RANKS)
+      
+      new_deck = [card6, card3, card2, card5, card1, card4]#Dealer uses the above rigged six card deck in this order to bust the player.
+      @blackjack.deck.replace_with new_deck
+      @blackjack.deal
+      @blackjack.hit#player hits to bust.
+      expect(@blackjack.set_results).to eq("Player Busted!")
+    end
+    
+    it "set the correct result when dealer busts" do
+      #player cards
+      card1 = Card.new("Clubs", "10")
+      card2 = Card.new("Hearts", "10")
+      card3 = Card.new("Diamonds", "Ace")#player hits this card & gets 21 (blackjack).
+      
+      # dealer cards
+      card4 = Card.new("Spades", "10")
+      card5 = Card.new("Clubs", "6")
+      card6 = Card.new("Hearts", "Queen")
+      
+      @blackjack = Blackjack.new(SUITS, RANKS)
+      
+      new_deck = [card6, card3, card2, card5, card1, card4]#Dealer uses the above rigged six card deck in this order to bust the player.
+      @blackjack.deck.replace_with new_deck
+      @blackjack.deal
+      @blackjack.hit#player hits to get 21 (blackjack).
+      @blackjack.stand#Player stands.
+      @blackjack.hit#Dealer hits and busts.
+      expect(@blackjack.set_results).to eq("Dealer Busted!")
+    end
+    
+    it "sets the correct result when there is a tie" do
+      #player cards
+      card1 = Card.new("Clubs", "10")
+      card2 = Card.new("Hearts", "10")
+      card3 = Card.new("Diamonds", "Ace")#player hits this card & gets 21 (blackjack).
+      
+      # dealer cards
+      card4 = Card.new("Spades", "10")
+      card5 = Card.new("Clubs", "10")
+      card6 = Card.new("Hearts", "Ace")
+      
+      @blackjack = Blackjack.new(SUITS, RANKS)
+      
+      new_deck = [card6, card3, card2, card5, card1, card4]#Dealer uses the above rigged six card deck in this order to bust the player.
+      @blackjack.deck.replace_with new_deck
+      @blackjack.deal
+      @blackjack.hit#player hits to get 21 (blackjack).
+      @blackjack.stand#Player stands.
+      @blackjack.hit#Dealer hits and gets 21 - It's a tie!
+      expect(@blackjack.set_results).to eq("It's a tie!")
+    end
+    
+    it "sets the correct result when the player wins" do
+      #player cards
+      card1 = Card.new("Clubs", "10")
+      card2 = Card.new("Hearts", "10")
+      card3 = Card.new("Diamonds", "Ace")#player hits this card & gets 21 (blackjack).
+      
+      # dealer cards
+      card4 = Card.new("Spades", "10")
+      card5 = Card.new("Clubs", "9")
+      card6 = Card.new("Hearts", "Ace")
+      
+      @blackjack = Blackjack.new(SUITS, RANKS)
+      
+      new_deck = [card6, card3, card2, card5, card1, card4]#Dealer uses the above rigged six card deck in this order to bust the player.
+      @blackjack.deck.replace_with new_deck
+      @blackjack.deal
+      @blackjack.hit#player hits to get 21 (blackjack).
+      @blackjack.stand#Player stands.
+      @blackjack.hit#Dealer hits and gets 20 - Player wins!
+      expect(@blackjack.set_results).to eq("The player won! (^o^)")
+    end
+    
+    it "sets the correct result when the dealer wins" do
+      #player cards
+      card1 = Card.new("Clubs", "10")
+      card2 = Card.new("Hearts", "9")
+      card3 = Card.new("Diamonds", "Ace")#player hits this card & gets 21 (blackjack).
+      
+      # dealer cards
+      card4 = Card.new("Spades", "10")
+      card5 = Card.new("Clubs", "10")
+      card6 = Card.new("Hearts", "Ace")
+      
+      @blackjack = Blackjack.new(SUITS, RANKS)
+      
+      new_deck = [card6, card3, card2, card5, card1, card4]#Dealer uses the above rigged six card deck in this order to bust the player.
+      @blackjack.deck.replace_with new_deck
+      @blackjack.deal
+      @blackjack.hit#player hits to get 20 (blackjack).
+      @blackjack.stand#Player stands.
+      @blackjack.hit#Dealer hits and gets 21 - Dealer wins. 
+      expect(@blackjack.set_results).to eq("The player lost. (-_-)")
     end
   end
 end
